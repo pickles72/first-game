@@ -14,8 +14,11 @@ private:
     sf::Event ev;
     sf::VideoMode videoMode;
 
+    sf::RectangleShape enemy;
+
     void initWindow();
     void initVariables();
+    void initEnemies();
 
 public:
     Game(/* args */);

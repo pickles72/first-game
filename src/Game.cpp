@@ -1,8 +1,11 @@
+#include <iostream>
+
 #include "Game.h"
 
 Game::Game() {
     this->initVariables();
     this->initWindow();
+    this->initEnemies();
 }
 
 Game::~Game() {
@@ -21,6 +24,18 @@ void Game::initWindow() {
     this->videoMode.height = 600;
     this->videoMode.width = 800;
     this->window = new sf::RenderWindow(this->videoMode, "My First Game", sf::Style::Titlebar | sf::Style::Close);
+
+    this->window->setFramerateLimit(144);
+}
+
+void Game::initEnemies() {
+    this->enemy.setPosition(sf::Vector2f(10.f, 10.f));
+
+    this->enemy.setSize(sf::Vector2f(100.f, 100.f));
+    this->enemy.setScale(sf::Vector2f(0.5f, 0.5f));
+    this->enemy.setFillColor(sf::Color::Cyan);
+    this->enemy.setOutlineColor(sf::Color::Green);
+    this->enemy.setOutlineThickness(1.f);
 }
 
 void Game::pollEvents() {
@@ -41,10 +56,14 @@ void Game::pollEvents() {
 
 void Game::update() {
     this->pollEvents();
+
+    std::cout << "Mouse pos: " << sf::Mouse::getPosition(*this->window).x << " " << sf::Mouse::getPosition(*this->window).y << "\n";
 }
 
 void Game::render() {
-    this->window->clear(sf::Color(255, 0, 0, 255));
+    this->window->clear();
+
+    this->window->draw(this->enemy);
 
     this->window->display();
 }
