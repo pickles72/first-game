@@ -1,6 +1,7 @@
 include(CTest)
 enable_testing()
 
-add_executable(flappybird main.m.cpp)
+find_package(SFML COMPONENTS system window graphics REQUIRED)
 
-target_link_libraries(flappybird STATIC sfml)
+add_executable(flappybird main.m.cpp)
+target_link_libraries(flappybird sfml-graphics)

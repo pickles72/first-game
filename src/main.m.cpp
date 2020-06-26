@@ -11,19 +11,24 @@ int main(int, char**) {
     sf::RenderWindow window(sf::VideoMode(640, 480), "My First Game", sf::Style::Titlebar | sf::Style::Close);
     sf::Event ev;
 
-    // Event Polling
-    while(window.pollEvent(ev)) {
-        switch(ev.type) {
-            case sf::Event::Closed:
-                window.close();
-                break;
-            case sf::Event::KeyPressed:
-                if(ev.key.code == sf::Keyboard::Escape) {
+    // Game loop
+    while(window.isOpen()) {
+        
+        // Event Polling
+        while(window.pollEvent(ev)) {
+            switch(ev.type) {
+                case sf::Event::Closed:
                     window.close();
-                }
-                break;
+                    break;
+                case sf::Event::KeyPressed:
+                    if(ev.key.code == sf::Keyboard::Escape) {
+                        window.close();
+                    }
+                    break;
+            }
         }
     }
+
 
     // Update
 
