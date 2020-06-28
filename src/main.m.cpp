@@ -9,7 +9,7 @@ int main(int, char**) {
     Game game;
 
     // Game loop
-    while(game.running()) {
+    while(game.running() && !game.getEndGame()) {
 
         game.update();
 
