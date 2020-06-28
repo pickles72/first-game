@@ -10,6 +10,8 @@ Game::Game() {
      */
     this->initVariables();
     this->initWindow();
+    this->initFonts();
+    this->initText();
     this->initEnemies();
 }
 
@@ -36,6 +38,19 @@ void Game::initVariables() {
     this->maxEnemies = 10;
 
     this->mouseHeld = false;
+}
+
+void Game::initFonts() {
+    if(this->font.loadFromFile("../fonts/ARCADECLASSIC.TTF")) {
+        std::cout << "ERROR::GAME::INITFONTS::Failed to load fonts\n";
+    }
+}
+
+void Game::initText() {
+    this->uiText.setFont(this->font);
+    this->uiText.setCharacterSize(24);
+    this->uiText.setFillColor(sf::Color::White);
+    this->uiText.setString("NONE");
 }
 
 const bool Game::running() const {
@@ -103,6 +118,15 @@ void Game::updateMousePositions() {
      */
     this->mousePosWindow = sf::Mouse::getPosition(*(this->window));
     this->mousePosView = this->window->mapPixelToCoords(this->mousePosWindow);
+}
+
+void Game::updateText() {
+    std::stringstream ss;
+
+    ss << "Points " << this->points << "\n"
+       << "Health " << this->health;
+
+    this->uiText.setString(ss.str());
 }
 
 void Game::initWindow() {
@@ -173,6 +197,8 @@ void Game::update() {
     if(!this->endGame) {
         this->updateMousePositions();
 
+        this->updateText();
+
         this->updateEnemies();
     }
 
@@ -182,14 +208,18 @@ void Game::update() {
     }
 }
 
-void Game::renderEnemies() {
+void Game::renderText(sf::RenderTarget& target) {
+    target.draw(this->uiText);
+}
+
+void Game::renderEnemies(sf::RenderTarget& target) {
     /**
      * @brief Draw all enemies in the screen
      * 
      */
 
     for(auto &e : this->enemies) {
-        this->window->draw(e);
+        target.draw(e);
     }
 }
 
@@ -200,7 +230,9 @@ void Game::render() {
      */
     this->window->clear();
 
-    this->renderEnemies();
+    this->renderEnemies(*this->window);
+
+    this->renderText(*this->window);
 
     this->window->display();
 }

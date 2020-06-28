@@ -8,6 +8,7 @@
 #include <SFML/Network.hpp>
 
 #include <vector>
+#include <sstream>
 
 class Game
 {
@@ -32,6 +33,12 @@ private:
 
     bool mouseHeld;
 
+    // Resources
+    sf::Font font;
+
+    // Text
+    sf::Text uiText;
+
     // Enemy
     std::vector<sf::RectangleShape> enemies;
     sf::RectangleShape enemy;
@@ -40,6 +47,8 @@ private:
     void initWindow();
     void initVariables();
     void initEnemies();
+    void initFonts();
+    void initText();
 
 public:
     // Constructors / Destructors
@@ -53,10 +62,14 @@ public:
     // Methods
     void spawnEnemy();
     void pollEvents();
+
+    void updateText();
     void updateEnemies();
     void updateMousePositions();
     void update();
-    void renderEnemies();
+
+    void renderText(sf::RenderTarget& target);
+    void renderEnemies(sf::RenderTarget& target);
     void render();
 };
 
