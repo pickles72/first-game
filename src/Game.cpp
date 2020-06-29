@@ -41,7 +41,7 @@ void Game::initVariables() {
 }
 
 void Game::initFonts() {
-    if(this->font.loadFromFile("../fonts/ARCADECLASSIC.TTF")) {
+    if(!this->font.loadFromFile("../fonts/ARCADECLASSIC.TTF")) {
         std::cout << "ERROR::GAME::INITFONTS::Failed to load fonts\n";
     }
 }
@@ -148,8 +148,7 @@ void Game::initEnemies() {
      */
     this->enemy.setPosition(sf::Vector2f(10.f, 10.f));
 
-    this->enemy.setSize(sf::Vector2f(100.f, 100.f));
-    this->enemy.setScale(sf::Vector2f(0.5f, 0.5f));
+    this->enemy.setSize(sf::Vector2f(1.f, 1.f));
     this->enemy.setFillColor(sf::Color::Cyan);
 }
 
@@ -163,7 +162,35 @@ void Game::spawnEnemy() {
         0.f
     );
 
-    this->enemy.setFillColor(sf::Color::Green);
+    // Randomize enemy type
+    int type = rand() % 5;
+
+    switch(type) {
+        case 0:
+            this->enemy.setScale(sf::Vector2f(10.f, 10.f));
+            this->enemy.setFillColor(sf::Color::Magenta);
+            break;
+        case 1:
+            this->enemy.setScale(sf::Vector2f(30.f, 30.f));
+            this->enemy.setFillColor(sf::Color::Blue);
+            break;
+        case 2:
+            this->enemy.setScale(sf::Vector2f(50.f, 50.f));
+            this->enemy.setFillColor(sf::Color::Cyan);
+            break;
+        case 3:
+            this->enemy.setScale(sf::Vector2f(70.f, 70.f));
+            this->enemy.setFillColor(sf::Color::Red);
+            break;
+        case 4:
+            this->enemy.setScale(sf::Vector2f(100.f, 100.f));
+            this->enemy.setFillColor(sf::Color::Green);
+            break;
+        default:
+            this->enemy.setScale(sf::Vector2f(100.f, 100.f));
+            this->enemy.setFillColor(sf::Color::Yellow);
+            break;
+    }
 
     this->enemies.push_back(this->enemy);
 }
